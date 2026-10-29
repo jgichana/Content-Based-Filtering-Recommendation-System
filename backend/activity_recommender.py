@@ -146,7 +146,8 @@ SELECT activity_id,
        embedding
 FROM activities
 WHERE age_min_months - %(tol)s <= %(age)s      -- hard developmental pre-filter
-  AND age_max_months + %(tol)s >= %(age)s;
+  AND age_max_months + %(tol)s >= %(age)s
+  AND interest = ANY(%(interests)s);            -- hard interest filter: only the selected interests
 """
 
 
@@ -160,8 +161,10 @@ def recommend_activities(
     """
     Top-k activities for a child.
 
-    1. Hard filter (in SQL): only activities whose age band contains the
-       child's age (widened by `age_tolerance_months` on both sides, 0 = strict).
+    1. Hard filters (in SQL): only activities whose age band contains the
+       child's age (widened by `age_tolerance_months` on both sides, 0 = strict)
+       AND whose `interest` is one of `interest_tags` (exact match). Fewer
+       than `top_k` results come back when not enough activities match.
     2. Rank the survivors (in Python, with numpy) by cosine similarity between
        the embedded interest tags and each activity's embedding. Embeddings
        are unit-normalised at ingest time, so cosine similarity is just a dot
@@ -174,7 +177,7 @@ def recommend_activities(
         raise ValueError("interest_tags must contain at least one non-empty tag")
 
     query_vec = embed([build_query_text(tags)])[0]  # shape (384,), unit norm
-    params = {"age": child_age_months, "tol": age_tolerance_months}
+    params = {"age": child_age_months, "tol": age_tolerance_months, "interests": tags}
 
     def run(c: psycopg.Connection) -> list[dict]:
         with c.cursor(row_factory=psycopg.rows.dict_row) as cur:

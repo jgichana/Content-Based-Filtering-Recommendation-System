@@ -1,0 +1,16 @@
+# Recommender
+numpy
+pandas
+psycopg[binary]
+sentence-transformers
+
+# API
+fastapi
+uvicorn
+pydantic[email]
+
+# Auth
+PyJWT
+bcrypt
+google-auth
+requests
