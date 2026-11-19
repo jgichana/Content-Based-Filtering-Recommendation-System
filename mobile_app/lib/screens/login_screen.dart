@@ -78,15 +78,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Icon(Icons.child_care,
-                        size: 64, color: theme.colorScheme.primary),
+                    // Icon(Icons.child_care,
+                    //     size: 64, color: theme.colorScheme.primary),
                     const SizedBox(height: 12),
                     Text('Child Activities',
                         style: theme.textTheme.headlineMedium,
                         textAlign: TextAlign.center),
                     const SizedBox(height: 4),
                     Text(
-                      'Activities matched to your child\'s age and interests',
+                      'Personalised activities for your child',
                       style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant),
                       textAlign: TextAlign.center,

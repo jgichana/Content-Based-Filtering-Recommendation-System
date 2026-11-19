@@ -39,13 +39,13 @@ class AuthService extends ChangeNotifier {
   final FlutterSecureStorage _storage;
   final GoogleSignIn _google;
 
-  AuthStatus _status = AuthStatus.unknown;
+  AuthStatus _status = AuthStatus.signedOut;
   Caregiver? _caregiver;
 
   AuthStatus get status => _status;
   Caregiver? get caregiver => _caregiver;
 
-  /// Restore a saved session on app start.
+  /// Restore a saved session when explicitly requested.
   Future<void> init() async {
     String? token;
     String? cached;

@@ -9,7 +9,7 @@ import 'services/auth_service.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final api = ApiClient();
-  final auth = AuthService(api)..init();
+  final auth = AuthService(api);
   runApp(
     MultiProvider(
       providers: [
@@ -56,7 +56,7 @@ class _ChildActivitiesAppState extends State<ChildActivitiesApp> {
   Widget build(BuildContext context) {
     ThemeData theme(Brightness brightness) => ThemeData(
           colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFF2E7D6B),
+            seedColor: const Color(0xFFFFC107),
             brightness: brightness,
           ),
           useMaterial3: true,
